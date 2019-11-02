@@ -20,6 +20,7 @@ int main(){
     uint16_t bytes_in_buffer;
     char recieved = 0;
     uint8_t health = 0;
+    uint8_t segments = 0;
 
     while(1){
 
@@ -35,6 +36,9 @@ int main(){
         keypad_read_portA();
         
         display_LED_portB(health, red_d, red_cl); 
+        display_digit_portB(segments, 4, 2, 3);
+        segments++;
+
         _delay_ms(16);
     
     }
