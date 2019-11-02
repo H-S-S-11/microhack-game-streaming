@@ -23,6 +23,7 @@ while l>0:
     i = int(readinput())
     if (r>i):
         print("The input was too small")
+        print()
         l = l-1
         ser.open()
         ser.write(bytes(str(l), "ascii"))
@@ -30,6 +31,7 @@ while l>0:
         
     elif (r<i):
         print("The input was too large")
+        print()
         l = l-1
         ser.open()
         ser.write(bytes(str(l), "ascii"))
@@ -37,6 +39,7 @@ while l>0:
         
     else:
         print("you guessed correctly")
+        pirnt()
         sys.exit(0)
     
     time.sleep(1)
