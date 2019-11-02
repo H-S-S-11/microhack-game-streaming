@@ -30,7 +30,22 @@ void display_LED_portB(uint8_t number, uint8_t data_pin, uint8_t clk_pin){
 }
 
 void display_digit_portB(uint8_t segs, uint8_t digit, uint8_t data_pin, uint8_t clk_pin){
-
+        PORTB |= _BV(digit);
+        int i;
+        for(i=0; i<8; i++){
+                if (segs & _BV(i)){
+                        PORTB |= _BV(data_pin);
+                }     
+                else {
+                        PORTB &= ~_BV(data_pin);
+                } 
+                _delay_us(1);
+                PORTB &= ~_BV(clk_pin);
+                PORTB |= _BV(clk_pin);
+                _delay_us(1);
+                PORTB &= ~_BV(clk_pin);       
+        }
+        PORTB &= ~_BV(digit); //digit pin sinks LED current so must be low
 }
 
 void display_string_portB(char string[4], uint8_t digit_pins[4], uint8_t seg_pin, uint8_t clk_pin){
