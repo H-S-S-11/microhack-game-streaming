@@ -6,7 +6,16 @@ This is a temporary script file.
 """
 
 import random
-#import pyserial
+import serial
+
+ser = serial.Serial()
+ser.baudrate = 9600
+ser.port('COMP3')
+try:
+    ser.open
+except:
+    print("failure in connecting to board")
+    sys.exit(0)
 
 print("you are going to FIght bad guyS")
 

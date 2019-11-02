@@ -7,13 +7,24 @@ Created on Sat Nov  2 13:01:11 2019
 
 import random
 import sys
-import pyserial
+import serial
+
+ser = serial.Serial()
+ser.baudrate = 9600
+ser.port='COM3'
+try:
+    ser.open()
+except:
+    print("failure in connecting to board")
+    sys.exit(0)
+
+ser.write(b'5')
 
 print("you ArE goIng to FIgHt A LIon")
 print("tHE rEd LIgHtS rEprESEnt your HEALtH")
 
 h = 150
-lh = 50
+lh = 150
 p = 5
 
 while True:
@@ -36,6 +47,8 @@ while True:
             
             if lh<=0:
                 print("you bEAt tHE LIon")
+                ser.write(b'0')
+                ser.close()
                 sys.exit(0)
             
         else:
@@ -45,11 +58,13 @@ while True:
             
             if lh<=0:
                 print("you bEAt tHE LIon")
+                ser.write(b'0')
+                ser.close()
                 sys.exit(0)
             
     
     elif o == "2" and p>0:
-        --p
+        p = p-1
         ho = h
         h = h+50
         
@@ -73,7 +88,9 @@ while True:
         print("tHE LIon dId "+str(ho-h)+" AttAC")
         
         if h<=0:
+            ser.write(b'0')
             print("you dIE")
+            ser.close()
             sys.exit(0)
         
     else:
@@ -82,5 +99,18 @@ while True:
         print("tHE LIon dId "+str(ho-h)+" AttAC")
         
         if h<=0:
+            ser.write(b'0')
             print("you dIE")
+            ser.close()
             sys.exit(0)
+            
+    if(h>=120):
+        ser.write(b'5')
+    elif(h>=90):
+        ser.write(b'4')
+    elif(h>=60):
+        ser.write(b'3')
+    elif(h>=30):
+        ser.write(b'2')
+    elif(h>0):
+        ser.write(b'1')
