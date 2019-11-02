@@ -15,7 +15,7 @@ int main(){
 
     //set up UART
     uart0_init (UART_BAUD_SELECT(9600, 12000000));
-    keypad_init_portC();
+    keypad_init_portA();
 
     uint16_t bytes_in_buffer;
     char recieved = 0;
@@ -33,8 +33,8 @@ int main(){
             }
        }
         
-        keypad_entry = keypad_read_portC();
-        if(keypad_entry != 0xff){
+        keypad_entry = keypad_read_portA();
+        if(keypad_entry != 0x10){
             uart0_putc(keypad_entry + '0');
         }
 
