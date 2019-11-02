@@ -2,6 +2,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "game_displays.h"
+#include "uart.h"
 
 int main(){
     int red_d = 0;
@@ -10,29 +11,19 @@ int main(){
     DDRB |= _BV(PINB1);
     PORTB = 0x00;
 
-    while(1){
-        /*
-    PORTB |= _BV(PINB0);
-    _delay_us(1);
-    PORTB &= ~_BV(PINB1);
-    PORTB |= _BV(PINB1);
-    _delay_us(1);
-    PORTB &= ~_BV(PINB1);
-    _delay_ms(1000);
+    //set up UART
+    uart0_init (9600);
+    uint16_t bytes_in_buffer;
+    char recieved;
 
-    PORTB &= ~_BV(PINB0);
-    _delay_us(1);
-    PORTB &= ~_BV(PINB1);
-    PORTB |= _BV(PINB1);
-    _delay_us(1);
-    PORTB &= ~_BV(PINB1);
-    _delay_ms(1000);
-    */
-        int i;
-        for (i = 0; i<6; i++){
-            display_LED_portB(i, red_d, red_cl);
-            _delay_ms(1000);
-        }
+    while(1){
+       
+        bytes_in_buffer =  uart0_available();
+       if(bytes_in_buffer){
+           recieved = uart0_getc() - 48;
+       }
+        
+        display_LED_portB(recieved, red_d, red_cl); 
     
     }
 }
