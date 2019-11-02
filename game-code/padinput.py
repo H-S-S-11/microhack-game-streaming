@@ -4,14 +4,13 @@ Created on Sat Nov  2 19:26:55 2019
 
 @author: aimeeelisabeth
 """
-import serial
-
-ser = serial.Serial()
-ser.baudrate = 9600
-ser.port = 'COM3'
-ser.open()
 
 def readinput():
+    import serial
+    ser = serial.Serial()
+    ser.baudrate = 9600
+    ser.port = 'COM3'
+    ser.open()
     inp = str(ser.read(3))
     
     col = inp[-3]
@@ -55,6 +54,6 @@ def readinput():
             return "C"
         
     ser.reset_input_buffer()
+    ser.close()
+
     
-print(readinput())
-ser.close()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Nov  2 13:01:11 2019
+created on Sat Nov  2 13:01:11 2019
 
 @author: pj2g19
 """
@@ -8,45 +8,45 @@ Created on Sat Nov  2 13:01:11 2019
 import random
 import sys
 import serial
+from padinput import readinput
 
 ser = serial.Serial()
 ser.baudrate = 9600
 ser.port='COM3'
-try:
-    ser.open()
-except:
-    print("failure in connecting to board")
-    sys.exit(0)
-
+ser.open()
 ser.write(b'5')
+ser.close()
 
-print("you ArE goIng to FIgHt A LIon")
-print("tHE rEd LIgHtS rEprESEnt your HEALtH")
+print("you are going to fight a lion")
+print("the red lights represent your health")
 
-h = 150
+h = 100
 lh = 150
 p = 5
 
 while True:
-    print("tHE LIon HAS "+ str(lh)+" HEALtH LEFt")
-    print("PrESS 1 to FIgHt, 2 to uSE A PotIon")
-    print(str(p)+" PotIonS LEFt")
-    o = input()
+    print("the lion has "+ str(lh)+" health left")
+    print("press 1 to fight, 2 to use a potion")
+    print(str(p)+" potions left")
+    print()
+    o = readinput()
     
     if o == "1":
         c = random.randint(1,10)
         
         if c==1:
-            print("your HIt dIdnt ConnECt")
+            print("your attack missed")
             
         elif c==10:
-            print("CrItICAL HIt!")
+            print("critical hit!")
             lo = lh
             lh = lh - (random.randint(5,15)*2)
-            print("you dId "+ str(lo-lh)+" AttAC")
+            print("you did "+ str(lo-lh)+" damage")
+            print()
             
             if lh<=0:
-                print("you bEAt tHE LIon")
+                print("you beat the lion")
+                ser.open()
                 ser.write(b'0')
                 ser.close()
                 sys.exit(0)
@@ -54,10 +54,12 @@ while True:
         else:
             lo = lh
             lh = lh - random.randint(5,15)
-            print("you dId "+str(lo-lh)+" AttAC")
+            print("you did "+str(lo-lh)+" damage")
+            print()
             
             if lh<=0:
-                print("you bEAt tHE LIon")
+                print("you beat the lion")
+                ser.open()
                 ser.write(b'0')
                 ser.close()
                 sys.exit(0)
@@ -71,46 +73,61 @@ while True:
         if h>150:
             h=150
         
-        print("you rEStorEd "+str(h-ho)+" HEALtH")
+        print("you restored "+str(h-ho)+" health")
+        print()
         
     
     else:
-        print("Error - not An InPut")
+        print("error - not an input")
         
     c = random.randint(1,10)
     if c==1:
-        print("tHE LIon dIdnt AttAC")
+        print("the lion missed")
         
     elif c==10:
-        print("tHE LIon dId A CrItICAL HIt")
+        print("the lion did a critical hit")
         ho = h
         h = h-(random.randint(15,30)*2)
-        print("tHE LIon dId "+str(ho-h)+" AttAC")
+        print("the lion did "+str(ho-h)+" damage")
+        print()
         
         if h<=0:
+            ser.open()
             ser.write(b'0')
-            print("you dIE")
+            print("you died")
             ser.close()
             sys.exit(0)
         
     else:
         ho = h
         h = h-random.randint(15,30)
-        print("tHE LIon dId "+str(ho-h)+" AttAC")
+        print("the lion did "+str(ho-h)+" damage")
+        print()
         
         if h<=0:
+            ser.open()
             ser.write(b'0')
-            print("you dIE")
+            print("you died")
             ser.close()
             sys.exit(0)
             
     if(h>=120):
+        ser.open()
         ser.write(b'5')
+        ser.close()
     elif(h>=90):
+        ser.open()
         ser.write(b'4')
+        ser.close()
     elif(h>=60):
+        ser.open()
         ser.write(b'3')
+        ser.close()
     elif(h>=30):
+        ser.open()
         ser.write(b'2')
+        ser.close()
     elif(h>0):
+        ser.open()
         ser.write(b'1')
+        ser.close()
