@@ -5,6 +5,7 @@
  */
 #include <inttypes.h>
 #include <avr/io.h>
+#include "UART.h"
 
 void init_uart0(void)
 {
@@ -22,7 +23,14 @@ char get_ch(void)
 	return UDR0;
 }
 
-*char get_str(char* )
+void get_str(char *string){
+	int i;
+	char recieved;
+	for(i=0; recieved = get_ch(); i++) {
+		string[i] = recieved;
+	}
+	string[i] = recieved;
+}
 
 void put_ch(char ch)
 {
