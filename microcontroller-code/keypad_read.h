@@ -2,4 +2,4 @@
 #include <inttypes.h>
 
 uint8_t keypad_read_portC();
-void kepyad_init_portC();
+void keypad_init_portC();
