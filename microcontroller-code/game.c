@@ -20,7 +20,6 @@ int main(){
     uint16_t bytes_in_buffer;
     char recieved = 0;
     uint8_t health = 0;
-    uint8_t keypad_entry;
 
     while(1){
 
@@ -33,11 +32,8 @@ int main(){
             }
        }
         
-        keypad_entry = keypad_read_portA();
-        if(keypad_entry != 0x10){
-            uart0_putc(keypad_entry + '0');
-        }
-
+        keypad_read_portA();
+        
         display_LED_portB(health, red_d, red_cl); 
         _delay_ms(16);
     
