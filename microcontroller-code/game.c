@@ -9,21 +9,28 @@ int main(){
     int red_cl = 1;
     DDRB |= _BV(PINB0);
     DDRB |= _BV(PINB1);
+    DDRB |= _BV(PINB2);
     PORTB = 0x00;
 
     //set up UART
-    uart0_init (9600);
+    uart0_init (UART_BAUD_SELECT(9600, 12000000));
     uint16_t bytes_in_buffer;
-    char recieved;
+    char recieved = 0;
+    uint8_t health = 0;
 
     while(1){
-       
+
         bytes_in_buffer =  uart0_available();
-       if(bytes_in_buffer){
-           recieved = uart0_getc() - 48;
+        if(bytes_in_buffer){
+            recieved = uart0_getc();
+            uart0_putc(recieved);
+            if((0x30 <= recieved) && (recieved <= 0x53)){
+            health = recieved - 0x30;
+            }
        }
         
-        display_LED_portB(recieved, red_d, red_cl); 
+        display_LED_portB(health, red_d, red_cl); 
+        _delay_ms(16);
     
     }
 }
