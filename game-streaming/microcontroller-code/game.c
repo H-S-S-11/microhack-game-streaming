@@ -36,7 +36,7 @@ int main(){
         keypad_read_portA();
         
         display_LED_portB(health, red_d, red_cl); 
-        display_digit_portB(segments, 4, 2, 3);
+        //display_digit_portB(segments, 4, 2, 3);
         //_delay_ms(100);
         segments++;
 
